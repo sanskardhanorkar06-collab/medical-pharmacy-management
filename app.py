@@ -1,135 +1,455 @@
 from flask import Flask, render_template, request, redirect, url_for
-from datetime import datetime, date
+import mysql.connector
+from datetime import date
 
 app = Flask(__name__)
 
-# ---------------------------------------------------------------------------
-# TEMPORARY DATA LAYER
-# This is a stand-in for the database. Everything in this section is meant
-# to be replaced later by your friend's actual DB code (sqlite3 / SQLAlchemy).
-#
-# IMPORTANT FOR HANDOFF:
-# Keep the function names and return shapes (add_medicine, get_medicines)
-# the same when swapping in the real DB. As long as get_medicines() keeps
-# returning a list of dicts with these exact keys, none of the routes or
-# templates below need to change.
-# ---------------------------------------------------------------------------
 
-_medicines = []
-_next_id = 1
+# ==========================================
+# DATABASE CONNECTION
+# ==========================================
+
+def get_db_connection():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Prabhansh@2006",
+        database="pharmacy_db"
+    )
 
 
-def add_medicine(name, brand, description, mfg_date, exp_date, quantity):
-    global _next_id
-    medicine = {
-        "id": _next_id,
-        "name": name,
-        "brand": brand,
-        "description": description,
-        "mfg_date": mfg_date,   # stored as string "YYYY-MM-DD"
-        "exp_date": exp_date,   # stored as string "YYYY-MM-DD"
-        "quantity": quantity,
-    }
-    _medicines.append(medicine)
-    _next_id += 1
-    return medicine
-
-
-def get_medicines():
-    return _medicines
-
-
-# ---------------------------------------------------------------------------
-# EXPIRY CLASSIFICATION LOGIC
-# Pure logic, no DB writes. Computes status at request time instead of
-# physically moving records between tables. This avoids the bug class where
-# a corrected expiry date would need the record moved back.
-# ---------------------------------------------------------------------------
-
-def classify_medicine(medicine):
-    """Returns 'expired', 'expiring_soon', or 'safe' based on exp_date."""
-    exp = datetime.strptime(medicine["exp_date"], "%Y-%m-%d").date()
-    today = date.today()
-    days_left = (exp - today).days
-
-    if days_left < 0:
-        return "expired"
-    elif days_left <= 7:
-        return "expiring_soon"
-    else:
-        return "safe"
-
-
-def get_medicines_by_status(status):
-    return [m for m in get_medicines() if classify_medicine(m) == status]
-
-
-# ---------------------------------------------------------------------------
-# ROUTES
-# ---------------------------------------------------------------------------
+# ==========================================
+# HOME PAGE
+# ==========================================
 
 @app.route("/")
 def home():
-    return render_template("index.html")
 
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        ORDER BY id DESC
+    """)
+
+    medicines = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template(
+        "index.html",
+        medicines=medicines
+    )
+
+
+# ==========================================
+# ADD MEDICINE
+# ==========================================
 
 @app.route("/add", methods=["GET", "POST"])
 def add():
+
     error = None
 
     if request.method == "POST":
+
+        # Get form data
         name = request.form.get("name", "").strip()
-        brand = request.form.get("brand", "").strip()
-        description = request.form.get("description", "").strip()
-        mfg_date = request.form.get("mfg_date", "").strip()
-        exp_date = request.form.get("exp_date", "").strip()
+        batch_no = request.form.get("batch_no", "").strip()
+        category = request.form.get("category", "").strip()
         quantity = request.form.get("quantity", "").strip()
+        price = request.form.get("price", "").strip()
+        manufacturing_date = request.form.get(
+            "manufacturing_date", ""
+        ).strip()
+        expiry_date = request.form.get(
+            "expiry_date", ""
+        ).strip()
+        min_stock = request.form.get(
+            "min_stock", "10"
+        ).strip()
 
-        # --- basic validation (Flask does not validate for you) ---
-        if not name or not mfg_date or not exp_date or not quantity:
-            error = "Name, manufacture date, expiry date, and quantity are required."
-        else:
-            try:
-                quantity = int(quantity)
-                if quantity < 0:
-                    raise ValueError
-            except ValueError:
-                error = "Quantity must be a non-negative whole number."
 
-            if not error:
-                mfg = datetime.strptime(mfg_date, "%Y-%m-%d").date()
-                exp = datetime.strptime(exp_date, "%Y-%m-%d").date()
-                if exp <= mfg:
-                    error = "Expiry date must be after manufacture date."
+        # -----------------------------
+        # Validation
+        # -----------------------------
+
+        if not name:
+            error = "Medicine name is required."
+
+        elif not batch_no:
+            error = "Batch number is required."
+
+        elif not quantity:
+            error = "Quantity is required."
+
+        elif not price:
+            error = "Price is required."
+
+        elif not manufacturing_date:
+            error = "Manufacturing date is required."
+
+        elif not expiry_date:
+            error = "Expiry date is required."
+
+
+        # -----------------------------
+        # Convert numbers
+        # -----------------------------
 
         if not error:
-            add_medicine(name, brand, description, mfg_date, exp_date, quantity)
-            return redirect(url_for("dashboard"))
 
-    return render_template("add_medicine.html", error=error)
+            try:
+                quantity = int(quantity)
 
+                if quantity < 0:
+                    error = "Quantity cannot be negative."
+
+            except ValueError:
+                error = "Quantity must be a whole number."
+
+
+        if not error:
+
+            try:
+                price = float(price)
+
+                if price < 0:
+                    error = "Price cannot be negative."
+
+            except ValueError:
+                error = "Price must be a valid number."
+
+
+        if not error:
+
+            try:
+                min_stock = int(min_stock)
+
+                if min_stock < 0:
+                    error = "Minimum stock cannot be negative."
+
+            except ValueError:
+                error = "Minimum stock must be a whole number."
+
+
+        # -----------------------------
+        # Check dates
+        # -----------------------------
+
+        if not error:
+
+            try:
+
+                mfg_date = date.fromisoformat(
+                    manufacturing_date
+                )
+
+                exp_date = date.fromisoformat(
+                    expiry_date
+                )
+
+                if exp_date <= mfg_date:
+
+                    error = (
+                        "Expiry date must be after "
+                        "manufacturing date."
+                    )
+
+            except ValueError:
+
+                error = "Invalid date format."
+
+
+        # -----------------------------
+        # Insert into MySQL
+        # -----------------------------
+
+        if not error:
+
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            query = """
+                INSERT INTO medicines
+                (
+                    name,
+                    batch_no,
+                    category,
+                    quantity,
+                    price,
+                    manufacturing_date,
+                    expiry_date,
+                    min_stock
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """
+
+            values = (
+                name,
+                batch_no,
+                category,
+                quantity,
+                price,
+                manufacturing_date,
+                expiry_date,
+                min_stock
+            )
+
+            try:
+
+                cursor.execute(query, values)
+
+                connection.commit()
+
+                cursor.close()
+                connection.close()
+
+                return redirect(url_for("dashboard"))
+
+            except mysql.connector.Error as e:
+
+                connection.rollback()
+
+                cursor.close()
+                connection.close()
+
+                error = f"Database error: {e}"
+
+
+    return render_template(
+        "add_medicine.html",
+        error=error
+    )
+
+
+# ==========================================
+# DASHBOARD
+# ==========================================
 
 @app.route("/dashboard")
 def dashboard():
-    medicines = []
-    for m in get_medicines():
-        entry = dict(m)
-        entry["status"] = classify_medicine(m)
-        medicines.append(entry)
-    return render_template("dashboard.html", medicines=medicines)
 
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        ORDER BY id DESC
+    """)
+
+    medicines = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+
+    # Add expiry and stock status
+    medicine_list = []
+
+    today = date.today()
+
+    for medicine in medicines:
+
+        expiry_date = medicine[7]
+        quantity = medicine[4]
+        min_stock = medicine[8]
+
+        # Calculate days remaining
+        days_left = (
+            expiry_date - today
+        ).days
+
+
+        # -----------------------------
+        # Expiry Status
+        # -----------------------------
+
+        if days_left < 0:
+
+            expiry_status = "Expired"
+
+        elif days_left <= 30:
+
+            expiry_status = "Expiring Soon"
+
+        else:
+
+            expiry_status = "Safe"
+
+
+        # -----------------------------
+        # Stock Status
+        # -----------------------------
+
+        if quantity <= min_stock:
+
+            stock_status = "Low Stock"
+
+        else:
+
+            stock_status = "Available"
+
+
+        medicine_list.append({
+            "id": medicine[0],
+            "name": medicine[1],
+            "batch_no": medicine[2],
+            "category": medicine[3],
+            "quantity": medicine[4],
+            "price": medicine[5],
+            "manufacturing_date": medicine[6],
+            "expiry_date": medicine[7],
+            "min_stock": medicine[8],
+            "days_left": days_left,
+            "expiry_status": expiry_status,
+            "stock_status": stock_status
+        })
+
+
+    return render_template(
+        "dashboard.html",
+        medicines=medicine_list
+    )
+
+
+# ==========================================
+# EXPIRING SOON
+# ==========================================
 
 @app.route("/expiring-soon")
 def expiring_soon():
-    medicines = get_medicines_by_status("expiring_soon")
-    return render_template("expiring_soon.html", medicines=medicines)
 
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        WHERE expiry_date >= CURDATE()
+        AND expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+        ORDER BY expiry_date ASC
+    """)
+
+    medicines = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template(
+        "expiring_soon.html",
+        medicines=medicines
+    )
+
+
+# ==========================================
+# EXPIRED MEDICINES
+# ==========================================
 
 @app.route("/expired")
 def expired():
-    medicines = get_medicines_by_status("expired")
-    return render_template("expired.html", medicines=medicines)
 
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        WHERE expiry_date < CURDATE()
+        ORDER BY expiry_date ASC
+    """)
+
+    medicines = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template(
+        "expired.html",
+        medicines=medicines
+    )
+
+
+# ==========================================
+# LOW STOCK
+# ==========================================
+
+@app.route("/low-stock")
+def low_stock():
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        WHERE quantity <= min_stock
+        ORDER BY quantity ASC
+    """)
+
+    medicines = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template(
+        "low_stock.html",
+        medicines=medicines
+    )
+
+
+# ==========================================
+# RUN APPLICATION
+# ==========================================
 
 if __name__ == "__main__":
     app.run(debug=True)
