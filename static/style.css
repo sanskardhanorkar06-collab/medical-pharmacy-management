@@ -117,3 +117,109 @@ button:hover {
     color: #666;
     line-height: 1.5;
 }
+
+/* ---------------- Form page ---------------- */
+
+.form-section {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 35px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.form-section h2 {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.medicine-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.medicine-form label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.medicine-form input,
+.medicine-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+}
+
+.medicine-form button {
+    margin-top: 20px;
+}
+
+.error-msg {
+    background: #ffe3e3;
+    color: #c92a2a;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+/* ---------------- Table pages ---------------- */
+
+.table-section {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 35px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.table-section h2 {
+    margin-bottom: 25px;
+}
+
+.medicine-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.medicine-table th,
+.medicine-table td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.medicine-table th {
+    background: #f5f7fa;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.badge-safe {
+    background: #d3f9d8;
+    color: #2b8a3e;
+}
+
+.badge-warning {
+    background: #fff3bf;
+    color: #e67700;
+}
+
+.badge-expired {
+    background: #ffe3e3;
+    color: #c92a2a;
+}

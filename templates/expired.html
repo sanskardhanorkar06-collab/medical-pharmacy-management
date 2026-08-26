@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expired Medicines - Smart Pharmacy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <div class="logo">💊 Smart Pharmacy</div>
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('add') }}">Medicines</a>
+            <a href="{{ url_for('expiring_soon') }}">Expiry Alerts</a>
+            <a href="{{ url_for('expired') }}">Expired</a>
+        </nav>
+    </header>
+
+    <section class="table-section">
+        <h2>Expired Medicines</h2>
+
+        {% if medicines|length == 0 %}
+            <p>No expired medicines. Good job.</p>
+        {% else %}
+        <table class="medicine-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Exp Date</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for m in medicines %}
+                <tr class="row-expired">
+                    <td>{{ m.name }}</td>
+                    <td>{{ m.brand }}</td>
+                    <td>{{ m.exp_date }}</td>
+                    <td>{{ m.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </section>
+
+</body>
+</html>
