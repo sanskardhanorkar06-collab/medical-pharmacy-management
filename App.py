@@ -8,7 +8,7 @@ def get_db_connection():
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="YOUR_MYSQL_PASSWORD",
+        password="Prabhansh@2006",
         database="pharmacy_db"
     )
 
@@ -37,3 +37,4 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
