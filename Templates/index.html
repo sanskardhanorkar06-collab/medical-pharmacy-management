@@ -1,48 +1,65 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Smart Pharmacy</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    
+    <!-- Connect CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-    <header>
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
         <div class="logo">
             💊 Smart Pharmacy
         </div>
 
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Dashboard</a>
-            <a href="#">Medicines</a>
-            <a href="#">Expiry Alerts</a>
-            <a href="#">Reports</a>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#medicines">Medicines</a>
+            <a href="#alerts">Expiry Alerts</a>
+            <a href="#reports">Reports</a>
         </nav>
+
     </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
 
     <section class="hero">
 
         <div class="hero-text">
 
-            <h1>Medicine Expiry Alert & Pharmacy Management System</h1>
+            <h1>
+                Medicine Expiry Alert &
+                Pharmacy Management System
+            </h1>
 
             <p>
                 Manage medicines, monitor stock, and get alerts
                 before medicines expire.
             </p>
 
-            <button>Get Started</button>
+            <a href="#medicines" class="btn">
+                View Medicines
+            </a>
 
         </div>
 
     </section>
 
+
+    <!-- ================= FEATURES ================= -->
 
     <section class="features">
 
@@ -51,36 +68,274 @@
         <div class="feature-container">
 
             <div class="card">
+
                 <h3>💊 Medicine Management</h3>
+
                 <p>
                     Add and manage medicine information easily.
                 </p>
+
             </div>
 
+
             <div class="card">
+
                 <h3>🔔 Expiry Alerts</h3>
+
                 <p>
                     Get alerts for expired and soon-to-expire medicines.
                 </p>
+
             </div>
 
+
             <div class="card">
+
                 <h3>📦 Stock Management</h3>
+
                 <p>
                     Monitor medicine quantity and low-stock items.
                 </p>
+
             </div>
 
+
             <div class="card">
+
                 <h3>📊 Reports</h3>
+
                 <p>
                     View pharmacy information through simple reports.
                 </p>
+
             </div>
 
         </div>
 
     </section>
 
+
+    <!-- ================= MEDICINE INVENTORY ================= -->
+
+    <section class="medicine-section" id="medicines">
+
+        <div class="section-title">
+
+            <h2>Medicine Inventory</h2>
+
+            <p>
+                Medicines currently stored in the pharmacy database.
+            </p>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Medicine Name</th>
+                        <th>Batch No.</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Manufacturing Date</th>
+                        <th>Expiry Date</th>
+                        <th>Minimum Stock</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for medicine in medicines %}
+
+                    <tr>
+
+                        <td>
+                            {{ medicine[0] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[1] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[2] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[3] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[4] }}
+                        </td>
+
+                        <td>
+                            ₹{{ medicine[5] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[6] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[7] }}
+                        </td>
+
+                        <td>
+                            {{ medicine[8] }}
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="9">
+                            No medicines found in the database.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= EXPIRY ALERT SECTION ================= -->
+
+    <section class="alerts" id="alerts">
+
+        <div class="section-title">
+
+            <h2>🔔 Expiry Alerts</h2>
+
+            <p>
+                Medicines that are expired or close to their expiry date
+                will be shown here.
+            </p>
+
+        </div>
+
+
+        <div class="alert-container">
+
+            <div class="alert-box expired">
+
+                <h3>🔴 Expired Medicines</h3>
+
+                <p>
+                    Expired medicine alerts will appear here.
+                </p>
+
+            </div>
+
+
+            <div class="alert-box warning">
+
+                <h3>🟠 Expiring Soon</h3>
+
+                <p>
+                    Medicines close to expiry will appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= REPORTS ================= -->
+
+    <section class="reports" id="reports">
+
+        <div class="section-title">
+
+            <h2>📊 Reports</h2>
+
+            <p>
+                Pharmacy stock and medicine reports will be displayed here.
+            </p>
+
+        </div>
+
+
+        <div class="report-container">
+
+            <div class="report-card">
+
+                <h3>Medicine Inventory</h3>
+
+                <p>
+                    View all medicines stored in the database.
+                </p>
+
+            </div>
+
+
+            <div class="report-card">
+
+                <h3>Expiry Report</h3>
+
+                <p>
+                    Check expired and soon-to-expire medicines.
+                </p>
+
+            </div>
+
+
+            <div class="report-card">
+
+                <h3>Stock Report</h3>
+
+                <p>
+                    Monitor medicine quantities and low-stock medicines.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>💊 Smart Pharmacy</h3>
+
+            <p>
+                Medicine Expiry Alert & Pharmacy Management System
+            </p>
+
+            <p class="copyright">
+                © 2026 Smart Pharmacy
+            </p>
+
+        </div>
+
+    </footer>
+
+
 </body>
+
 </html>
+```
