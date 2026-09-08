@@ -308,18 +308,29 @@ def sales():
 
     if request.method == "POST":
 
-        medicine_id = request.form.get("medicine_id", "").strip()
-        sold_quantity = request.form.get("quantity", "").strip()
+        medicine_id = request.form.get(
+            "medicine_id",
+            ""
+        ).strip()
+
+        sold_quantity = request.form.get(
+            "quantity",
+            ""
+        ).strip()
+
 
         # -----------------------------
         # Validate medicine
         # -----------------------------
 
         if not medicine_id:
+
             error = "Please select a medicine."
 
         elif not sold_quantity:
+
             error = "Please enter quantity."
+
 
         # -----------------------------
         # Convert quantity
@@ -328,16 +339,24 @@ def sales():
         if not error:
 
             try:
+
                 sold_quantity = int(sold_quantity)
 
                 if sold_quantity <= 0:
-                    error = "Quantity must be greater than 0."
+
+                    error = (
+                        "Quantity must be greater than 0."
+                    )
 
             except ValueError:
-                error = "Quantity must be a whole number."
+
+                error = (
+                    "Quantity must be a whole number."
+                )
+
 
         # -----------------------------
-        # Get medicine
+        # Get medicine details
         # -----------------------------
 
         if not error:
@@ -355,10 +374,12 @@ def sales():
             medicine = cursor.fetchone()
 
             if not medicine:
+
                 error = "Medicine not found."
 
+
         # -----------------------------
-        # Check stock
+        # Check available stock
         # -----------------------------
 
         if not error:
@@ -372,29 +393,98 @@ def sales():
                     "are available in stock."
                 )
 
+
         # -----------------------------
-        # Complete sale
+        # Complete Sale
         # -----------------------------
 
         if not error:
 
-            new_stock = current_stock - sold_quantity
+            try:
 
-            cursor.execute("""
-                UPDATE medicines
-                SET quantity = %s
-                WHERE id = %s
-            """, (new_stock, medicine_id))
+                medicine_name = medicine[1]
 
-            connection.commit()
+                medicine_price = float(
+                    medicine[3]
+                )
 
-            total = sold_quantity * float(medicine[3])
+                total = (
+                    sold_quantity
+                    * medicine_price
+                )
 
-            message = (
-                f"Sale completed successfully! "
-                f"Total: ₹{total:.2f}. "
-                f"Remaining stock: {new_stock}"
-            )
+                new_stock = (
+                    current_stock
+                    - sold_quantity
+                )
+
+
+                # -------------------------
+                # Update medicine stock
+                # -------------------------
+
+                cursor.execute("""
+                    UPDATE medicines
+                    SET quantity = %s
+                    WHERE id = %s
+                """, (
+                    new_stock,
+                    medicine_id
+                ))
+
+
+                # -------------------------
+                # Save sale in sales table
+                # -------------------------
+
+                cursor.execute("""
+                    INSERT INTO sales
+                    (
+                        medicine_id,
+                        medicine_name,
+                        quantity,
+                        price,
+                        total,
+                        sale_date
+                    )
+                    VALUES
+                    (
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        CURDATE()
+                    )
+                """, (
+                    medicine_id,
+                    medicine_name,
+                    sold_quantity,
+                    medicine_price,
+                    total
+                ))
+
+
+                # Save both operations
+
+                connection.commit()
+
+
+                message = (
+                    f"Sale completed successfully! "
+                    f"Total: ₹{total:.2f}. "
+                    f"Remaining stock: {new_stock}"
+                )
+
+
+            except mysql.connector.Error as e:
+
+                connection.rollback()
+
+                error = (
+                    f"Database error: {e}"
+                )
+
 
     # -----------------------------
     # Get all medicines
@@ -412,16 +502,22 @@ def sales():
 
     medicines = cursor.fetchall()
 
+
     cursor.close()
     connection.close()
 
-    return render_template(
-        "sales.html",
-        medicines=medicines,
-        message=message,
-        error=error
-    )
 
+    return render_template(
+
+        "sales.html",
+
+        medicines=medicines,
+
+        message=message,
+
+        error=error
+
+    )
 
 # ==========================================
 # DASHBOARD
@@ -729,7 +825,139 @@ def delete_medicine(medicine_id):
 
     return redirect(url_for("dashboard"))
 
+# ==========================================
+# EXPIRY ALERTS
+# ==========================================
 
+@app.route("/expiry-alerts")
+def expiry_alerts():
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Expiring soon medicines
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        WHERE expiry_date >= CURDATE()
+        AND expiry_date <= DATE_ADD(
+            CURDATE(),
+            INTERVAL 30 DAY
+        )
+        ORDER BY expiry_date ASC
+    """)
+
+    expiring_medicines = cursor.fetchall()
+
+
+    # Expired medicines
+    cursor.execute("""
+        SELECT
+            id,
+            name,
+            batch_no,
+            category,
+            quantity,
+            price,
+            manufacturing_date,
+            expiry_date,
+            min_stock
+        FROM medicines
+        WHERE expiry_date < CURDATE()
+        ORDER BY expiry_date ASC
+    """)
+
+    expired_medicines = cursor.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template(
+        "expiry_alerts.html",
+        expiring_medicines=expiring_medicines,
+        expired_medicines=expired_medicines
+    )
+# ==========================================
+# REPORTS
+# ==========================================
+
+@app.route("/reports")
+def reports():
+
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    # Total medicines
+    cursor.execute("SELECT COUNT(*) FROM medicines")
+    total_medicines = cursor.fetchone()[0]
+
+    # Total stock
+    cursor.execute("SELECT COALESCE(SUM(quantity), 0) FROM medicines")
+    total_stock = cursor.fetchone()[0]
+
+    # Expired medicines
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM medicines
+        WHERE expiry_date < CURDATE()
+    """)
+    expired_medicines = cursor.fetchone()[0]
+
+    # Expiring soon
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM medicines
+        WHERE expiry_date >= CURDATE()
+        AND expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+    """)
+    expiring_medicines = cursor.fetchone()[0]
+
+    # Low stock
+    cursor.execute("""
+        SELECT COUNT(*)
+        FROM medicines
+        WHERE quantity <= min_stock
+    """)
+    low_stock_medicines = cursor.fetchone()[0]
+
+    # Total sales
+    cursor.execute("""
+        SELECT COALESCE(SUM(total), 0)
+        FROM sales
+    """)
+    total_sales = cursor.fetchone()[0]
+
+    # Monthly sales
+    cursor.execute("""
+        SELECT COALESCE(SUM(total), 0)
+        FROM sales
+        WHERE YEAR(sale_date) = YEAR(CURDATE())
+        AND MONTH(sale_date) = MONTH(CURDATE())
+    """)
+    monthly_sales = cursor.fetchone()[0]
+
+    cursor.close()
+    connection.close()
+
+    return render_template(
+        "reports.html",
+        total_medicines=total_medicines,
+        total_stock=total_stock,
+        expired_medicines=expired_medicines,
+        expiring_medicines=expiring_medicines,
+        low_stock_medicines=low_stock_medicines,
+        total_sales=total_sales,
+        monthly_sales=monthly_sales
+    )
 # ==========================================
 # RUN APPLICATION
 # ==========================================
