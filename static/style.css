@@ -3,6 +3,21 @@
    ADD THIS CODE AT THE VERY BOTTOM OF style.css
 ===================================================== */
 
+/* Keep the page within the browser viewport */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+}
 
 /* =========================
    ATTRACTIVE HEADER
