@@ -1,303 +1,2406 @@
-/* =========================
-   RESET
-========================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f8f7;
-    color: #263238;
-    line-height: 1.6;
-}
+/* =====================================================
+   SMART PHARMACY - NEW ATTRACTIVE DESIGN
+   ADD THIS CODE AT THE VERY BOTTOM OF style.css
+===================================================== */
 
 
 /* =========================
-   HEADER
+   ATTRACTIVE HEADER
 ========================= */
 
 .header {
-    background: #087f5b;
-    color: white;
+    background: rgba(255, 255, 255, 0.97);
+    color: #173b32;
 
-    min-height: 70px;
+    border-bottom: 1px solid #e2efeb;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 80, 65, 0.08);
 
-    padding: 15px 7%;
+    backdrop-filter: blur(10px);
 
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.12);
+    transition: 0.3s;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
+    color: #123f37;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 25px;
+
+    font-weight: 800;
+}
+
+.logo::before {
+    content: "💊";
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #13a886,
+        #087f5b
+    );
+
+    box-shadow:
+        0 6px 15px rgba(8, 127, 91, 0.25);
+
+    font-size: 21px;
 }
 
 .navbar {
     display: flex;
-    gap: 28px;
+    align-items: center;
+
+    gap: 6px;
 }
 
 .navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
+    color: #48645e;
 
-    transition: 0.3s;
+    text-decoration: none;
+
+    font-weight: 600;
+
+    padding: 9px 13px;
+
+    border-radius: 9px;
+
+    transition: all 0.25s ease;
 }
 
 .navbar a:hover {
-    color: #c8fff0;
-}
+    color: #087f5b;
 
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    min-height: 500px;
-
-    display: flex;
-    align-items: center;
-
-    padding: 70px 8%;
-
-    background: linear-gradient(
-        135deg,
-        #e7fff6,
-        #f7fbfa
-    );
-}
-
-.hero-text {
-    max-width: 750px;
-}
-
-.hero h1 {
-    font-size: 48px;
-    line-height: 1.15;
-
-    color: #173b32;
-
-    margin-bottom: 25px;
-}
-
-.hero p {
-    font-size: 19px;
-
-    color: #66736f;
-
-    margin-bottom: 30px;
-}
-
-.btn {
-    display: inline-block;
-
-    background: #087f5b;
-    color: white;
-
-    padding: 13px 28px;
-
-    border-radius: 7px;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    transition: 0.3s;
-}
-
-.btn:hover {
-    background: #056b4c;
+    background: #e8f8f3;
 
     transform: translateY(-2px);
 }
 
 
 /* =========================
-   FEATURES
+   HERO - ATTRACTIVE DESIGN
 ========================= */
 
-.features {
-    padding: 75px 8%;
+.hero {
+    min-height: 560px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(23, 168, 134, 0.22),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 75% 90%,
+            rgba(23, 168, 134, 0.13),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            #e6fff6,
+            #f8fffd 60%,
+            #e8faf5
+        );
+}
+
+
+/* Decorative circle */
+
+.hero::before {
+    content: "💊";
+
+    position: absolute;
+
+    right: 9%;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 290px;
+    height: 290px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.70);
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 25px 70px rgba(18, 80, 70, 0.13);
+
+    font-size: 105px;
+
+    z-index: 1;
+}
+
+
+/* Small decorative circle */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 170px;
+    height: 170px;
+
+    right: 2%;
+    top: 7%;
+
+    border-radius: 50%;
+
+    background: rgba(11, 155, 128, 0.08);
+}
+
+
+/* Hero text */
+
+.hero-text {
+    position: relative;
+
+    z-index: 5;
+
+    max-width: 720px;
+}
+
+
+/* Small badge */
+
+.hero-text::before {
+    content: "SMART • SAFE • SIMPLE";
+
+    display: inline-block;
+
+    padding: 8px 16px;
+
+    margin-bottom: 20px;
+
+    border-radius: 30px;
 
     background: white;
 
-    text-align: center;
+    color: #087f5b;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    box-shadow:
+        0 6px 20px rgba(20, 90, 75, 0.08);
 }
 
-.features h2,
-.medicine-section h2,
-.alerts h2,
-.reports h2 {
-    font-size: 34px;
+
+/* Hero heading */
+
+.hero h1 {
+    font-size: 50px;
+
+    line-height: 1.12;
+
+    letter-spacing: -1.5px;
+
+    color: #123f37;
+
+    font-weight: 800;
+
+    margin-bottom: 22px;
+}
+
+
+/* Hero paragraph */
+
+.hero p {
+    font-size: 19px;
+
+    color: #60756f;
+
+    max-width: 650px;
+
+    margin-bottom: 32px;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn {
+    background: linear-gradient(
+        135deg,
+        #0b9b7c,
+        #087f5b
+    );
+
+    color: white;
+
+    padding: 14px 28px;
+
+    border-radius: 11px;
+
+    border: none;
+
+    box-shadow:
+        0 9px 22px rgba(8, 127, 91, 0.25);
+
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(
+        135deg,
+        #087f5b,
+        #056b4c
+    );
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 28px rgba(8, 127, 91, 0.32);
+}
+
+
+/* =========================
+   FEATURES SECTION
+========================= */
+
+.features {
+    padding: 85px 8%;
+
+    background: #ffffff;
+
+    position: relative;
+}
+
+
+/* Feature heading */
+
+.features h2 {
+    font-size: 36px;
 
     color: #173b32;
 
-    margin-bottom: 35px;
+    margin-bottom: 42px;
+
+    font-weight: 800;
 }
+
+
+/* Feature grid */
 
 .feature-container {
+    max-width: 1250px;
+
+    margin: auto;
+
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
-    gap: 25px;
+    gap: 24px;
 }
 
+
+/* =========================
+   FEATURE CARDS
+========================= */
+
 .card {
-    background: #f8fbfa;
+    background: #ffffff;
 
-    padding: 30px 22px;
+    padding: 32px 24px;
 
+    border-radius: 18px;
+
+    border: 1px solid #e2eeea;
+
+    box-shadow:
+        0 8px 28px
+        rgba(0, 70, 60, 0.06);
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition: all 0.3s ease;
+}
+
+
+/* Top green line */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        #0b9b7c,
+        #5dd5ba
+    );
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+
+    transition: 0.3s;
+}
+
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+
+/* Card hover */
+
+.card:hover {
+    transform: translateY(-9px);
+
+    border-color: #b8e4da;
+
+    box-shadow:
+        0 18px 40px
+        rgba(0, 90, 75, 0.13);
+}
+
+
+/* Card heading */
+
+.card h3 {
+    color: #173b32;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    margin-bottom: 12px;
+}
+
+
+/* Card paragraph */
+
+.card p {
+    color: #687c77;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FEATURE CARD ICON EFFECT
+========================= */
+
+.card h3:first-letter {
+    font-size: 24px;
+}
+
+
+/* =========================
+   FORM PAGE IMPROVEMENT
+========================= */
+
+.form-section {
+    border: 1px solid #e2eeea;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(20, 70, 62, 0.08);
+
+    transition: 0.3s;
+}
+
+.form-section:hover {
+    box-shadow:
+        0 18px 45px
+        rgba(20, 70, 62, 0.12);
+}
+
+.form-section h2 {
+    color: #173b32;
+
+    font-size: 28px;
+}
+
+
+/* =========================
+   TABLE PAGE IMPROVEMENT
+========================= */
+
+.table-section {
+    border: 1px solid #e2eeea;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(20, 70, 62, 0.07);
+}
+
+.table-section h2 {
+    color: #173b32;
+
+    font-size: 28px;
+}
+
+
+/* Table hover */
+
+.medicine-table tbody tr {
+    transition: 0.2s;
+}
+
+.medicine-table tbody tr:hover {
+    background: #f3fbf8;
+
+    transform: scale(1.002);
+}
+
+
+/* =========================
+   BETTER BADGES
+========================= */
+
+.badge {
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.badge-safe {
+    background: #e3f8ee;
+
+    color: #168253;
+}
+
+.badge-warning {
+    background: #fff5d8;
+
+    color: #9b7200;
+}
+
+.badge-expired {
+    background: #ffe8e8;
+
+    color: #c44242;
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .hero::before {
+        right: -70px;
+
+        opacity: 0.35;
+    }
+
+    .feature-container {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 43px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .header {
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding: 15px 5%;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 4px;
+    }
+
+    .navbar a {
+        font-size: 13px;
+
+        padding: 7px 9px;
+    }
+
+    .hero {
+        min-height: 500px;
+
+        padding: 55px 7%;
+    }
+
+    .hero::before {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+
+        letter-spacing: -1px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+
+    .features {
+        padding: 60px 7%;
+    }
+
+    .features h2 {
+        font-size: 30px;
+    }
+
+    .form-section,
+    .table-section {
+        width: 92%;
+
+        padding: 25px;
+    }
+}
+/* =====================================================
+   TOP NAVIGATION - NEW DESIGN
+   Add at the bottom of style.css
+===================================================== */
+
+/* Main header */
+header,
+.header {
+    background: rgba(255, 255, 255, 0.97) !important;
+
+    color: #173b32 !important;
+
+    min-height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 12px 7% !important;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 9999;
+
+    border-bottom: 1px solid #e2efeb;
+
+    box-shadow:
+        0 4px 20px rgba(0, 80, 65, 0.10);
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* Logo */
+header .logo,
+.header .logo {
+    color: #123f37 !important;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* Medicine icon beside logo */
+header .logo::before,
+.header .logo::before {
+    content: "💊";
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #13a886,
+            #087f5b
+        );
+
+    box-shadow:
+        0 6px 15px rgba(8, 127, 91, 0.25);
+
+    font-size: 21px;
+}
+
+
+/* Navigation */
+header nav,
+.header nav,
+.navbar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+/* Navigation links */
+header nav a,
+.header nav a,
+.navbar a {
+    color: #48645e !important;
+
+    background: transparent;
+
+    text-decoration: none !important;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    padding: 10px 14px;
+
+    border-radius: 10px;
+
+    transition: all 0.25s ease;
+}
+
+
+/* Hover */
+header nav a:hover,
+.header nav a:hover,
+.navbar a:hover {
+    color: #087f5b !important;
+
+    background: #e8f8f3;
+
+    transform: translateY(-2px);
+}
+
+/* Correct active navbar button */
+
+.navbar a.active {
+    color: #087f5b !important;
+    background: #e8f8f3 !important;
+    padding: 10px 16px;
+    border-radius: 12px;
+}
+
+.navbar a:not(.active) {
+    background: transparent !important;
+    color: #173b32 !important;
+}
+
+/* =====================================================
+   MOBILE NAVIGATION
+===================================================== */
+
+@media (max-width: 800px) {
+
+    header,
+    .header {
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding: 15px 5% !important;
+    }
+
+    header nav,
+    .header nav,
+    .navbar {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 4px;
+    }
+
+    header nav a,
+    .header nav a,
+    .navbar a {
+        font-size: 13px;
+
+        padding: 7px 9px;
+    }
+}
+/* =====================================================
+   FINAL NAVIGATION FIX
+===================================================== */
+
+header.header {
+    width: 100%;
+
+    height: 90px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 6% !important;
+
+    background: #ffffff !important;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 9999;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+/* Logo */
+
+header.header .logo {
+    color: #126b4f !important;
+
+    font-size: 32px !important;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* Logo icon */
+
+header.header .logo::before {
+    content: "💊";
+
+    font-size: 35px;
+
+    width: auto;
+
+    height: auto;
+
+    background: none !important;
+
+    box-shadow: none !important;
+
+    border-radius: 0;
+}
+
+
+/* Navigation */
+
+header.header .navbar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* Navigation links */
+
+header.header .navbar a {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 13px 17px;
+
+    border-radius: 12px;
+
+    color: #29343a !important;
+
+    background: transparent;
+
+    text-decoration: none !important;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+
+
+
+
+/* Hover */
+
+header.header .navbar a:hover {
+    color: #087f5b !important;
+
+    background: #e9f8f1 !important;
+
+    transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   NAVIGATION MOBILE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    header.header {
+        height: auto;
+
+        padding: 15px 5% !important;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    header.header .navbar {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    header.header .navbar a {
+        font-size: 14px;
+
+        padding: 9px 11px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    header.header .logo {
+        font-size: 25px !important;
+    }
+
+    header.header .navbar a {
+        font-size: 12px;
+
+        padding: 7px 8px;
+    }
+}/* =========================
+   SMART PHARMACY LOGO
+========================= */
+
+.header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.header .logo img {
+    width: 300px;
+    height: 70px;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+}
+
+.header .logo::before {
+    display: none !important;
+    content: none !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .header .logo img {
+        width: 250px;
+        height: 60px;
+    }
+}
+/* =====================================================
+   FINAL SMALL DESIGN CHANGES
+===================================================== */
+
+
+/* =========================
+   MOVE LOGO TO LEFT
+========================= */
+
+.header .logo {
+    margin-left: 0 !important;
+
+    justify-content: flex-start !important;
+
+    width: auto !important;
+
+    text-align: left !important;
+}
+
+.header .logo img {
+    width: 300px;
+
+    height: 75px;
+
+    object-fit: contain;
+
+    object-position: left center;
+}
+
+
+/* =========================
+   ATTRACTIVE GET STARTED
+========================= */
+
+.hero .btn,
+.hero a button,
+.hero button {
+    background: linear-gradient(
+        135deg,
+        #0aa66f,
+        #087f5b
+    ) !important;
+
+    color: white !important;
+
+    border: none !important;
+
+    padding: 15px 30px !important;
+
+    border-radius: 10px !important;
+
+    font-size: 17px !important;
+
+    font-weight: 700 !important;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(8, 127, 91, 0.25);
+
+    transition: all 0.3s ease;
+}
+
+
+/* Arrow */
+
+.hero .btn::after,
+.hero a button::after {
+    content: " →";
+
+    font-size: 21px;
+
+    margin-left: 8px;
+}
+
+
+/* Button hover */
+
+.hero .btn:hover,
+.hero a button:hover,
+.hero button:hover {
+    background: linear-gradient(
+        135deg,
+        #087f5b,
+        #056b4c
+    ) !important;
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 28px rgba(8, 127, 91, 0.32);
+}
+
+
+/* Button click */
+
+.hero .btn:active,
+.hero a button:active,
+.hero button:active {
+    transform: translateY(0);
+}
+/* =====================================================
+   ADD MEDICINE PAGE - MODERN DESIGN
+===================================================== */
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.add-page-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 40px 7% 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eafbf5,
+            #f8fffd
+        );
+}
+
+.page-icon {
+    width: 78px;
+
+    height: 78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    color: #0b9567;
+
+    font-size: 35px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 80, 65, 0.10);
+
+    border: 1px solid #dceee8;
+}
+
+.add-page-header h1 {
+    font-size: 38px;
+
+    color: #073f34;
+
+    margin-bottom: 5px;
+
+    font-weight: 800;
+}
+
+.add-page-header p {
+    color: #647772;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   FORM CARD
+========================= */
+
+.medicine-form-card {
+    width: 88%;
+
+    max-width: 1400px;
+
+    margin: 10px auto 40px;
+
+    padding: 28px 35px;
+
+    background: white;
+
+    border: 1px solid #e2eeea;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 70, 60, 0.08);
+}
+
+
+/* =========================
+   FORM HEADING
+========================= */
+
+.form-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding-bottom: 20px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid #e4eeeb;
+}
+
+.form-heading-icon {
+    width: 50px;
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e7f8f1;
+
+    color: #079567;
+
+    font-size: 24px;
+}
+
+.form-heading h2 {
+    color: #12473d;
+
+    font-size: 25px;
+
+    margin-bottom: 2px;
+}
+
+.form-heading p {
+    color: #71827d;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FORM GRID
+========================= */
+
+.new-medicine-form {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    column-gap: 55px;
+
+    row-gap: 18px;
+}
+
+
+/* =========================
+   FORM GROUP
+========================= */
+
+.new-form-group {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.new-form-group label {
+    color: #24463f;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    margin-bottom: 7px;
+}
+
+.new-form-group label span {
+    color: #e53935;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+.new-form-group input,
+.new-form-group select,
+.new-form-group textarea {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d6e4df;
+
+    border-radius: 8px;
+
+    background: #fcfefd;
+
+    color: #263f38;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all 0.25s ease;
+}
+
+.new-form-group input::placeholder,
+.new-form-group textarea::placeholder {
+    color: #94a39f;
+}
+
+.new-form-group input:focus,
+.new-form-group select:focus,
+.new-form-group textarea:focus {
+    border-color: #0a986b;
+
+    background: white;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(10, 152, 107, 0.10);
+}
+
+
+/* Textarea */
+
+.new-form-group textarea {
+    resize: vertical;
+
+    min-height: 75px;
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.description-group {
+    grid-column: 1;
+}
+
+
+/* =========================
+   IMPORTANT INFORMATION
+========================= */
+
+.important-information {
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 12px;
+
+    padding: 17px 20px;
+
+    border-radius: 12px;
+
+    background:
+        #effbf6;
+
+    border: 1px solid #d6eee5;
+}
+
+.important-icon {
+    width: 48px;
+
+    height: 48px;
+
+    min-width: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #d9f5e9;
+
+    font-size: 23px;
+}
+
+.important-information h3 {
+    color: #16483e;
+
+    font-size: 18px;
+
+    margin-bottom: 3px;
+}
+
+.important-information p {
+    color: #536b65;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FORM BUTTONS
+========================= */
+
+.form-buttons {
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 5px;
+}
+
+.reset-button,
+.add-medicine-button {
+    padding: 13px 24px;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+
+/* Reset */
+
+.reset-button {
+    background: white;
+
+    color: #334b46;
+
+    border: 1px solid #d5e2de;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.reset-button:hover {
+    background: #f3f8f6;
+
+    transform: translateY(-2px);
+}
+
+
+/* Add Medicine */
+
+.add-medicine-button {
+    color: white;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0aa16d,
+            #087f5b
+        );
+
+    box-shadow:
+        0 8px 20px
+        rgba(8, 127, 91, 0.25);
+}
+
+.add-medicine-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 28px
+        rgba(8, 127, 91, 0.32);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+
+    .add-page-header {
+        padding: 30px 6% 25px;
+    }
+
+    .add-page-header h1 {
+        font-size: 30px;
+    }
+
+    .medicine-form-card {
+        width: 92%;
+
+        padding: 25px 20px;
+    }
+
+    .new-medicine-form {
+        grid-template-columns: 1fr;
+
+        column-gap: 0;
+    }
+
+    .description-group,
+    .important-information,
+    .form-buttons {
+        grid-column: 1;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .add-page-header {
+        gap: 12px;
+    }
+
+    .page-icon {
+        width: 55px;
+
+        height: 55px;
+
+        font-size: 25px;
+    }
+
+    .add-page-header h1 {
+        font-size: 25px;
+    }
+
+    .add-page-header p {
+        font-size: 13px;
+    }
+
+    .form-heading h2 {
+        font-size: 21px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .reset-button,
+    .add-medicine-button {
+        width: 100%;
+    }
+}
+/* =====================================================
+   DASHBOARD / ALL MEDICINES PAGE
+===================================================== */
+
+
+/* =========================
+   DASHBOARD HEADER
+========================= */
+
+.dashboard-header {
+    padding: 38px 7% 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edfff8,
+            #ffffff
+        );
+}
+
+.dashboard-header h1 {
+    color: #073f34;
+
+    font-size: 36px;
+
+    margin-bottom: 5px;
+
+    font-weight: 800;
+}
+
+.dashboard-header p {
+    color: #657873;
+
+    font-size: 16px;
+}
+
+
+/* Add button */
+
+.dashboard-add-btn {
+    display: inline-block;
+
+    padding: 13px 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0aa16d,
+            #087f5b
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 9px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 7px 18px
+        rgba(8, 127, 91, 0.20);
+
+    transition: 0.25s;
+}
+
+.dashboard-add-btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(8, 127, 91, 0.28);
+}
+
+
+/* =========================
+   SUMMARY CARDS
+========================= */
+
+.dashboard-summary {
+    padding: 20px 7% 30px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+
+    background: #ffffff;
+}
+
+.summary-card {
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    background: white;
+
+    border: 1px solid #e2eeea;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 7px 22px
+        rgba(0, 70, 60, 0.06);
+}
+
+.summary-icon {
+    width: 50px;
+
+    height: 50px;
+
+    min-width: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background: #e6f8f1;
+
+    font-size: 24px;
+}
+
+.warning-icon {
+    background: #fff5dc;
+}
+
+.danger-icon {
+    background: #ffeaea;
+}
+
+.stock-icon {
+    background: #e9f1ff;
+}
+
+.summary-card span {
+    display: block;
+
+    color: #72817d;
+
+    font-size: 13px;
+
+    margin-bottom: 3px;
+}
+
+.summary-card strong {
+    color: #123f37;
+
+    font-size: 25px;
+}
+
+
+/* =========================
+   TABLE CARD
+========================= */
+
+.dashboard-table-card {
+    width: 90%;
+
+    margin: 5px auto 50px;
+
+    background: white;
+
+    border: 1px solid #e2eeea;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 70, 60, 0.07);
+}
+
+.table-title {
+    margin-bottom: 22px;
+}
+
+.table-title h2 {
+    color: #123f37;
+
+    font-size: 25px;
+
+    margin-bottom: 4px;
+}
+
+.table-title p {
+    color: #71817c;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* =========================
+   MEDICINE TABLE
+========================= */
+
+.dashboard-table-card .medicine-table {
+    width: 100%;
+
+    min-width: 1200px;
+
+    border-collapse: collapse;
+}
+
+.dashboard-table-card .medicine-table th {
+    padding: 14px 12px;
+
+    background: #f0faf6;
+
+    color: #31534b;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    border-bottom: 2px solid #d9ebe4;
+}
+
+.dashboard-table-card .medicine-table td {
+    padding: 15px 12px;
+
+    color: #435650;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    border-bottom: 1px solid #edf2f0;
+}
+
+.dashboard-table-card .medicine-table tbody tr {
+    transition: 0.2s;
+}
+
+.dashboard-table-card .medicine-table tbody tr:hover {
+    background: #f6fcfa;
+}
+
+
+/* Medicine name */
+
+.dashboard-table-card .medicine-table td strong {
+    color: #123f37;
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+.category-badge {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: #e9f7f2;
+
+    color: #087f5b;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.delete-btn {
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #fff0f0;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background: #ffe0e0;
+
+    transform: scale(1.08);
+}
+
+
+/* =========================
+   EMPTY INVENTORY
+========================= */
+
+.empty-inventory {
+    text-align: center;
+
+    padding: 60px 20px;
+}
+
+.empty-inventory > div {
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+.empty-inventory h3 {
+    color: #173b32;
+
+    font-size: 22px;
+
+    margin-bottom: 5px;
+}
+
+.empty-inventory p {
+    color: #72817d;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+
+    .dashboard-summary {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .dashboard-header {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .dashboard-table-card {
+        width: 94%;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .dashboard-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 18px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 30px;
+    }
+
+    .dashboard-summary {
+        grid-template-columns: 1fr;
+
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .dashboard-table-card {
+        padding: 15px;
+    }
+}/* ==========================================
+   LOW STOCK ALERT PAGE
+========================================== */
+
+.low-stock-page {
+    max-width: 1200px;
+    margin: 45px auto;
+    padding: 0 25px;
+}
+
+.low-stock-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.low-stock-heading h1 {
+    font-size: 36px;
+    color: #173b32;
+    margin-bottom: 8px;
+}
+
+.low-stock-heading p {
+    color: #6b7773;
+    font-size: 16px;
+}
+
+.low-stock-count {
+    min-width: 110px;
+    padding: 15px 20px;
     border-radius: 14px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    background: #ffe9d5;
+    color: #d9480f;
+}
 
-    border: 1px solid #e5efeb;
+.low-stock-count span {
+    display: block;
+    font-size: 13px;
+    font-weight: normal;
+    margin-top: 3px;
+}
+
+
+/* ==========================================
+   LOW STOCK CARD
+========================================== */
+
+.low-stock-card {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    background: white;
+
+    padding: 22px 25px;
+
+    margin-bottom: 18px;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5ece9;
 
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
 
     transition: 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-8px);
+.low-stock-card:hover {
+    transform: translateY(-3px);
 
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-
-    border-color: #087f5b;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.10);
 }
 
-.card h3 {
+
+/* ==========================================
+   ICON
+========================================== */
+
+.stock-icon {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #fff0df;
+
+    font-size: 28px;
+
+    flex-shrink: 0;
+}
+
+
+/* ==========================================
+   MEDICINE INFORMATION
+========================================== */
+
+.low-stock-info {
+    flex: 1;
+}
+
+.low-stock-info h2 {
+    margin-bottom: 8px;
+
     color: #173b32;
 
-    margin-bottom: 12px;
-
-    font-size: 19px;
+    font-size: 21px;
 }
 
-.card p {
-    color: #666;
-    line-height: 1.5;
+.low-stock-info p {
+    display: inline-block;
+
+    margin-right: 25px;
+
+    color: #68746f;
+
+    font-size: 14px;
 }
 
-/* ---------------- Form page ---------------- */
+.low-stock-info strong {
+    color: #374a44;
+}
 
-.form-section {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 35px;
+
+/* ==========================================
+   STOCK DETAILS
+========================================== */
+
+.stock-details {
+    display: flex;
+    gap: 35px;
+
+    text-align: center;
+}
+
+.stock-details span {
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #89948f;
+
+    margin-bottom: 5px;
+}
+
+.stock-details strong {
+    display: block;
+
+    font-size: 22px;
+
+    color: #263f38;
+}
+
+.stock-details .quantity-danger {
+    color: #d9480f;
+}
+
+
+/* ==========================================
+   LOW STOCK STATUS
+========================================== */
+
+.stock-status span {
+    display: inline-block;
+
+    padding: 7px 13px;
+
+    border-radius: 20px;
+
+    background: #ffe3e3;
+
+    color: #c92a2a;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   NO LOW STOCK
+========================================== */
+
+.no-low-stock {
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+
+    border-radius: 18px;
+
+    padding: 65px 25px;
+
+    text-align: center;
+
+    border: 1px solid #e5ece9;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
-.form-section h2 {
+.no-low-stock-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 35px;
+
+    background: #d3f9d8;
+
+    color: #2b8a3e;
+}
+
+.no-low-stock h2 {
+    color: #173b32;
+
+    margin-bottom: 8px;
+}
+
+.no-low-stock p {
+    color: #77837f;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .low-stock-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .low-stock-card {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .stock-details {
+        width: 100%;
+
+        justify-content: flex-start;
+
+        text-align: left;
+    }
+
+}
+/* Make Low Stock dashboard card clickable */
+.dashboard-summary a.summary-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+/* ==========================================
+   SALES PAGE
+========================================== */
+
+.sales-page {
+    max-width: 900px;
+    margin: 45px auto;
+    padding: 0 25px;
+}
+
+.sales-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sales-header h1 {
+    font-size: 36px;
+    color: #173b32;
+    margin-bottom: 8px;
+}
+
+.sales-header p {
+    color: #6b7773;
+    font-size: 16px;
+}
+
+
+/* ==========================================
+   SALES CARD
+========================================== */
+
+.sales-card {
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    border: 1px solid #e5ece9;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.sales-card h2 {
+    color: #173b32;
     margin-bottom: 25px;
     text-align: center;
 }
 
-.medicine-form {
+.sales-form {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
 }
 
-.medicine-form label {
-    font-size: 14px;
+.sales-form label {
     font-weight: bold;
-    margin-top: 10px;
+    color: #374a44;
+    margin-top: 8px;
 }
 
-.medicine-form input,
-.medicine-form textarea {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-    font-family: inherit;
-}
-
-.medicine-form button {
-    margin-top: 20px;
-}
-
-.error-msg {
-    background: #ffe3e3;
-    color: #c92a2a;
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 15px;
-}
-
-/* ---------------- Table pages ---------------- */
-
-.table-section {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 35px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-}
-
-.table-section h2 {
-    margin-bottom: 25px;
-}
-
-.medicine-table {
+.sales-form select,
+.sales-form input {
     width: 100%;
-    border-collapse: collapse;
+    padding: 13px 15px;
+
+    border: 1px solid #dce7e3;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
 }
 
-.medicine-table th,
-.medicine-table td {
-    text-align: left;
-    padding: 12px 10px;
-    border-bottom: 1px solid #eee;
+.sales-form select:focus,
+.sales-form input:focus {
+    border-color: #087f5b;
 }
 
-.medicine-table th {
-    background: #f5f7fa;
-    font-size: 14px;
-    text-transform: uppercase;
-    color: #666;
-}
 
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 13px;
+/* ==========================================
+   COMPLETE SALE BUTTON
+========================================== */
+
+.complete-sale-btn {
+    margin-top: 20px;
+
+    padding: 14px 25px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #087f5b;
+    color: white;
+
+    font-size: 16px;
     font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
 }
 
-.badge-safe {
+.complete-sale-btn:hover {
+    background: #056b4c;
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   SALES MESSAGE
+========================================== */
+
+.sales-success {
     background: #d3f9d8;
     color: #2b8a3e;
+
+    padding: 14px 18px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-weight: bold;
 }
 
-.badge-warning {
-    background: #fff3bf;
-    color: #e67700;
-}
-
-.badge-expired {
+.sales-error {
     background: #ffe3e3;
     color: #c92a2a;
+
+    padding: 14px 18px;
+
+    border-radius: 10px;
+
+    margin-bottom: 20px;
+
+    font-weight: bold;
+}
+
+
+/* ==========================================
+   SALES INFORMATION
+========================================== */
+
+.sales-info {
+    margin-top: 25px;
+
+    background: #eaf8f3;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.sales-info > div {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.sales-info h3 {
+    color: #173b32;
+    margin-bottom: 8px;
+}
+
+.sales-info p {
+    color: #68746f;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    .sales-page {
+        margin: 25px auto;
+    }
+
+    .sales-card {
+        padding: 25px 20px;
+    }
+
+    .sales-header h1 {
+        font-size: 30px;
+    }
+
 }

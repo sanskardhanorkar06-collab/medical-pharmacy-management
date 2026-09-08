@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Expiry Alerts - Smart Pharmacy</title>
+    <title>Low Stock Alert - Smart Pharmacy</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
@@ -36,51 +36,63 @@
 <a href="{{ url_for('sales') }}">
     🧾 Sales
 </a>
-        <a href="{{ url_for('expiring_soon') }}"
-           class="active">
+        <a href="{{ url_for('expiring_soon') }}">
             Expiry Alerts
         </a>
 
-        <a href="{{ url_for('expired') }}">Expired</a>
+        <a href="{{ url_for('expired') }}">
+            Expired
+        </a>
 
     </nav>
 
 </header>
 
 
-<main class="alert-page">
+<main class="low-stock-page">
 
-    <div class="alert-heading">
+    <!-- PAGE HEADER -->
+
+    <div class="low-stock-heading">
 
         <div>
-            <h1>🔔 Expiry Alerts</h1>
+
+            <h1>📦 Low Stock Alert</h1>
 
             <p>
-                Medicines that will expire within the next 7 days.
+                Medicines that have reached or fallen below
+                their minimum stock level.
             </p>
+
         </div>
 
-        <div class="alert-count">
+        <div class="low-stock-count">
+
             {{ medicines|length }}
-            <span>Alerts</span>
+
+            <span>Low Stock</span>
+
         </div>
 
     </div>
 
 
+    <!-- MEDICINES -->
+
     {% if medicines %}
 
-    <div class="alert-list">
+    <div class="low-stock-list">
 
         {% for medicine in medicines %}
 
-        <div class="medicine-alert-card">
+        <div class="low-stock-card">
 
-            <div class="alert-icon">
-                ⚠️
+            <div class="stock-icon">
+                📦
             </div>
 
-            <div class="medicine-alert-info">
+
+            <div class="low-stock-info">
 
                 <h2>{{ medicine[1] }}</h2>
 
@@ -94,29 +106,39 @@
                     {{ medicine[3] }}
                 </p>
 
-                <p>
-                    <strong>Quantity:</strong>
-                    {{ medicine[4] }}
-                </p>
+            </div>
+
+
+            <div class="stock-details">
+
+                <div>
+
+                    <span>AVAILABLE</span>
+
+                    <strong class="quantity-danger">
+                        {{ medicine[4] }}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>MINIMUM REQUIRED</span>
+
+                    <strong>
+                        {{ medicine[8] }}
+                    </strong>
+
+                </div>
 
             </div>
 
 
-            <div class="expiry-info">
+            <div class="stock-status">
 
-                <span class="expiry-label">
-                    EXPIRY DATE
-                </span>
-
-                <strong>
-                    {{ medicine[7] }}
-                </strong>
-
-                {% set days_left = (medicine[7] - today).days
-                   if today is defined else 0 %}
-
-                <span class="warning-badge">
-                    Expiring Soon
+                <span>
+                    LOW STOCK
                 </span>
 
             </div>
@@ -129,16 +151,19 @@
 
     {% else %}
 
-    <div class="no-alert">
+    <!-- NO LOW STOCK -->
 
-        <div class="no-alert-icon">
+    <div class="no-low-stock">
+
+        <div class="no-low-stock-icon">
             ✓
         </div>
 
-        <h2>No Expiry Alerts</h2>
+        <h2>Stock Levels Are Good</h2>
 
         <p>
-            Great! No medicines are expiring within the next 7 days.
+            Great! There are currently no medicines
+            below the minimum stock level.
         </p>
 
     </div>

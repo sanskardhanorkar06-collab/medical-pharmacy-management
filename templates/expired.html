@@ -1,52 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Expired Medicines - Smart Pharmacy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">💊 Smart Pharmacy</div>
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('add') }}">Medicines</a>
-            <a href="{{ url_for('expiring_soon') }}">Expiry Alerts</a>
-            <a href="{{ url_for('expired') }}">Expired</a>
-        </nav>
-    </header>
+<header class="header">
 
-    <section class="table-section">
-        <h2>Expired Medicines</h2>
+    <div class="logo">
 
-        {% if medicines|length == 0 %}
-            <p>No expired medicines. Good job.</p>
-        {% else %}
-        <table class="medicine-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Exp Date</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for m in medicines %}
-                <tr class="row-expired">
-                    <td>{{ m.name }}</td>
-                    <td>{{ m.brand }}</td>
-                    <td>{{ m.exp_date }}</td>
-                    <td>{{ m.quantity }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% endif %}
-    </section>
+        <img src="{{ url_for('static', filename='logoo.png') }}"
+             alt="Smart Pharmacy">
+
+    </div>
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+        <a href="{{ url_for('add') }}">
+    Medicines
+</a>
+
+        <a href="{{ url_for('expiring_soon') }}">
+            Expiry Alerts
+        </a>
+
+        <a href="{{ url_for('expired') }}"
+           class="active">
+            Expired
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="expired-page">
+
+    <div class="expired-heading">
+
+        <div>
+
+            <h1>🚫 Expired Medicines</h1>
+
+            <p>
+                Medicines that have already passed their expiry date.
+            </p>
+
+        </div>
+
+        <div class="expired-count">
+
+            {{ medicines|length }}
+
+            <span>Expired</span>
+
+        </div>
+
+    </div>
+
+
+    {% if medicines %}
+
+    <div class="expired-list">
+
+        {% for medicine in medicines %}
+
+        <div class="expired-card">
+
+            <div class="expired-icon">
+                🚫
+            </div>
+
+
+            <div class="expired-medicine-info">
+
+                <h2>{{ medicine[1] }}</h2>
+
+                <p>
+                    <strong>Batch:</strong>
+                    {{ medicine[2] }}
+                </p>
+
+                <p>
+                    <strong>Category:</strong>
+                    {{ medicine[3] }}
+                </p>
+
+                <p>
+                    <strong>Quantity:</strong>
+                    {{ medicine[4] }}
+                </p>
+
+            </div>
+
+
+            <div class="expired-date">
+
+                <span>
+                    EXPIRED ON
+                </span>
+
+                <strong>
+                    {{ medicine[7] }}
+                </strong>
+
+                <b>
+                    EXPIRED
+                </b>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="no-expired">
+
+        <div class="no-expired-icon">
+            ✓
+        </div>
+
+        <h2>No Expired Medicines</h2>
+
+        <p>
+            Excellent! There are currently no expired medicines.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</main>
 
 </body>
+
 </html>

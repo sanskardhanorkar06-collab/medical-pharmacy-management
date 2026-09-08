@@ -1,64 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Dashboard - Smart Pharmacy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
 
-    <header>
-        <div class="logo">💊 Smart Pharmacy</div>
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('add') }}">Medicines</a>
-            <a href="{{ url_for('expiring_soon') }}">Expiry Alerts</a>
-            <a href="{{ url_for('expired') }}">Expired</a>
-        </nav>
-    </header>
 
-    <section class="table-section">
-        <h2>All Medicines</h2>
+<!-- =========================
+     HEADER
+========================= -->
 
-        {% if medicines|length == 0 %}
-            <p>No medicines added yet. <a href="{{ url_for('add') }}">Add one</a>.</p>
-        {% else %}
-        <table class="medicine-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Mfg Date</th>
-                    <th>Exp Date</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for m in medicines %}
-                <tr class="row-{{ m.status }}">
-                    <td>{{ m.name }}</td>
-                    <td>{{ m.brand }}</td>
-                    <td>{{ m.mfg_date }}</td>
-                    <td>{{ m.exp_date }}</td>
-                    <td>{{ m.quantity }}</td>
-                    <td>
-                        {% if m.status == 'expired' %}
-                            <span class="badge badge-expired">Expired</span>
-                        {% elif m.status == 'expiring_soon' %}
-                            <span class="badge badge-warning">Expiring Soon</span>
-                        {% else %}
-                            <span class="badge badge-safe">Safe</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        {% endif %}
-    </section>
+<header class="header">
+
+    <div class="logo">
+
+        <img src="{{ url_for('static', filename='logoo.png') }}"
+             alt="Smart Pharmacy">
+
+    </div>
+
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('home') }}">
+            🏠 Home
+        </a>
+
+        <a href="{{ url_for('dashboard') }}" class="active">
+            ▦ Dashboard
+        </a>
+
+        <a href="{{ url_for('medicines') }}">
+            💊 Medicines
+        </a>
+<a href="{{ url_for('sales') }}">
+    🧾 Sales
+</a>
+        <a href="{{ url_for('expiring_soon') }}">
+            🔔 Expiry Alerts
+        </a>
+
+        <a href="{{ url_for('expired') }}">
+            📊 Reports
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     DASHBOARD HEADER
+========================= -->
+
+<section class="dashboard-header">
+
+    <div>
+
+        <h1>Dashboard</h1>
+
+        <p>
+            Manage and monitor your pharmacy inventory.
+        </p>
+
+    </div>
+
+
+    <a href="{{ url_for('add') }}"
+       class="dashboard-add-btn">
+
+        + Add Medicine
+
+    </a>
+
+</section>
+
+
+<!-- =========================
+     SUMMARY CARDS
+========================= -->
+
+<section class="dashboard-summary">
+
+
+    <!-- TOTAL MEDICINES -->
+
+    <div class="summary-card">
+
+        <div class="summary-icon">
+            💊
+        </div>
+
+        <div>
+
+            <span>Total Medicines</span>
+
+            <strong>
+                {{ summary.total }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPIRING SOON -->
+
+    <div class="summary-card">
+
+        <div class="summary-icon warning-icon">
+            🔔
+        </div>
+
+        <div>
+
+            <span>Expiring Soon</span>
+
+            <strong>
+                {{ summary.expiring }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPIRED -->
+
+    <div class="summary-card">
+
+        <div class="summary-icon danger-icon">
+            ⚠️
+        </div>
+
+        <div>
+
+            <span>Expired</span>
+
+            <strong>
+                {{ summary.expired }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOW STOCK -->
+
+    <a href="{{ url_for('low_stock') }}"
+       class="summary-card">
+
+        <div class="summary-icon stock-icon">
+            📦
+        </div>
+
+        <div>
+
+            <span>Low Stock</span>
+
+            <strong>
+                {{ summary.low_stock }}
+            </strong>
+
+        </div>
+
+    </a>
+
+
+</section>
+
 
 </body>
+
 </html>
