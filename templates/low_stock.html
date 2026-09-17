@@ -8,165 +8,163 @@
 
     <title>Low Stock Alert - Smart Pharmacy</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
-<header class="header">
+    <header class="header">
 
-    <div class="logo">
+        <div class="logo">
 
-        <img src="{{ url_for('static', filename='logoo.png') }}"
-             alt="Smart Pharmacy">
+            <img src="{{ url_for('static', filename='logoo.png') }}" alt="Smart Pharmacy">
 
-    </div>
+        </div>
 
-    <nav class="navbar">
+        <nav class="navbar">
 
-        <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('home') }}">Home</a>
 
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
 
-        <a href="{{ url_for('medicines') }}">
-    💊 Medicines
-</a>
-<a href="{{ url_for('sales') }}">
-    🧾 Sales
-</a>
-        <a href="{{ url_for('expiry_alerts') }}">
-            Expiry Alerts
-        </a>
+            <a href="{{ url_for('medicines') }}">
+                Medicines
+            </a>
+            <a href="{{ url_for('sales') }}">
+                Sales
+            </a>
+            <a href="{{ url_for('expiry_alerts') }}">
+                Expiry Alerts
+            </a>
 
-    </nav>
+        </nav>
 
-</header>
+    </header>
 
 
-<main class="low-stock-page">
+    <main class="low-stock-page">
 
-    <!-- PAGE HEADER -->
+        <!-- PAGE HEADER -->
 
-    <div class="low-stock-heading">
+        <div class="low-stock-heading">
 
-        <div>
+            <div>
 
-            <h1>📦 Low Stock Alert</h1>
+                <h1>📦 Low Stock Alert</h1>
+
+                <p>
+                    Medicines that have reached or fallen below
+                    their minimum stock level.
+                </p>
+
+            </div>
+
+            <div class="low-stock-count">
+
+                {{ medicines|length }}
+
+                <span>Low Stock</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- MEDICINES -->
+
+        {% if medicines %}
+
+        <div class="low-stock-list">
+
+            {% for medicine in medicines %}
+
+            <div class="low-stock-card">
+
+                <div class="stock-icon">
+                    📦
+                </div>
+
+
+                <div class="low-stock-info">
+
+                    <h2>{{ medicine[1] }}</h2>
+
+                    <p>
+                        <strong>Batch:</strong>
+                        {{ medicine[2] }}
+                    </p>
+
+                    <p>
+                        <strong>Category:</strong>
+                        {{ medicine[3] }}
+                    </p>
+
+                </div>
+
+
+                <div class="stock-details">
+
+                    <div>
+
+                        <span>AVAILABLE</span>
+
+                        <strong class="quantity-danger">
+                            {{ medicine[4] }}
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>MINIMUM REQUIRED</span>
+
+                        <strong>
+                            {{ medicine[8] }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stock-status">
+
+                    <span>
+                        LOW STOCK
+                    </span>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <!-- NO LOW STOCK -->
+
+        <div class="no-low-stock">
+
+            <div class="no-low-stock-icon">
+                ✓
+            </div>
+
+            <h2>Stock Levels Are Good</h2>
 
             <p>
-                Medicines that have reached or fallen below
-                their minimum stock level.
+                Great! There are currently no medicines
+                below the minimum stock level.
             </p>
 
         </div>
 
-        <div class="low-stock-count">
+        {% endif %}
 
-            {{ medicines|length }}
-
-            <span>Low Stock</span>
-
-        </div>
-
-    </div>
-
-
-    <!-- MEDICINES -->
-
-    {% if medicines %}
-
-    <div class="low-stock-list">
-
-        {% for medicine in medicines %}
-
-        <div class="low-stock-card">
-
-            <div class="stock-icon">
-                📦
-            </div>
-
-
-            <div class="low-stock-info">
-
-                <h2>{{ medicine[1] }}</h2>
-
-                <p>
-                    <strong>Batch:</strong>
-                    {{ medicine[2] }}
-                </p>
-
-                <p>
-                    <strong>Category:</strong>
-                    {{ medicine[3] }}
-                </p>
-
-            </div>
-
-
-            <div class="stock-details">
-
-                <div>
-
-                    <span>AVAILABLE</span>
-
-                    <strong class="quantity-danger">
-                        {{ medicine[4] }}
-                    </strong>
-
-                </div>
-
-
-                <div>
-
-                    <span>MINIMUM REQUIRED</span>
-
-                    <strong>
-                        {{ medicine[8] }}
-                    </strong>
-
-                </div>
-
-            </div>
-
-
-            <div class="stock-status">
-
-                <span>
-                    LOW STOCK
-                </span>
-
-            </div>
-
-        </div>
-
-        {% endfor %}
-
-    </div>
-
-    {% else %}
-
-    <!-- NO LOW STOCK -->
-
-    <div class="no-low-stock">
-
-        <div class="no-low-stock-icon">
-            ✓
-        </div>
-
-        <h2>Stock Levels Are Good</h2>
-
-        <p>
-            Great! There are currently no medicines
-            below the minimum stock level.
-        </p>
-
-    </div>
-
-    {% endif %}
-
-</main>
+    </main>
 
 </body>
 
