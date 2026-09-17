@@ -689,36 +689,7 @@ def dashboard():
 
 @app.route("/expiring-soon")
 def expiring_soon():
-
-    connection = get_db_connection()
-    cursor = connection.cursor()
-
-    cursor.execute("""
-        SELECT
-            id,
-            name,
-            batch_no,
-            category,
-            quantity,
-            price,
-            manufacturing_date,
-            expiry_date,
-            min_stock
-        FROM medicines
-        WHERE expiry_date >= CURDATE()
-        AND expiry_date <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)
-        ORDER BY expiry_date ASC
-    """)
-
-    medicines = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    return render_template(
-        "expiring_soon.html",
-        medicines=medicines
-    )
+    return redirect(url_for("expiry_alerts"))
 
 
 # ==========================================
@@ -727,35 +698,7 @@ def expiring_soon():
 
 @app.route("/expired")
 def expired():
-
-    connection = get_db_connection()
-    cursor = connection.cursor()
-
-    cursor.execute("""
-        SELECT
-            id,
-            name,
-            batch_no,
-            category,
-            quantity,
-            price,
-            manufacturing_date,
-            expiry_date,
-            min_stock
-        FROM medicines
-        WHERE expiry_date < CURDATE()
-        ORDER BY expiry_date ASC
-    """)
-
-    medicines = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    return render_template(
-        "expired.html",
-        medicines=medicines
-    )
+    return redirect(url_for("expiry_alerts"))
 
 # ==========================================
 # LOW STOCK
