@@ -125,42 +125,35 @@ def add():
         if not error:
 
             try:
-
                 quantity = int(quantity)
 
                 if quantity < 0:
                     error = "Quantity cannot be negative."
 
             except ValueError:
-
                 error = "Quantity must be a whole number."
 
 
         if not error:
 
             try:
-
                 price = float(price)
 
                 if price < 0:
                     error = "Price cannot be negative."
 
             except ValueError:
-
                 error = "Price must be a valid number."
 
 
         if not error:
-
             try:
-
                 min_stock = int(min_stock)
 
                 if min_stock < 0:
                     error = "Minimum stock cannot be negative."
 
             except ValueError:
-
                 error = "Minimum stock must be a whole number."
 
 
@@ -171,24 +164,20 @@ def add():
         if not error:
 
             try:
-
                 mfg_date = date.fromisoformat(
                     manufacturing_date
                 )
-
                 exp_date = date.fromisoformat(
                     expiry_date
                 )
 
                 if exp_date <= mfg_date:
-
                     error = (
                         "Expiry date must be after "
                         "manufacturing date."
                     )
 
             except ValueError:
-
                 error = "Invalid date format."
 
 
@@ -197,7 +186,6 @@ def add():
         # -----------------------------
 
         if not error:
-
             connection = get_db_connection()
             cursor = connection.cursor()
 
@@ -228,28 +216,21 @@ def add():
             )
 
             try:
-
                 cursor.execute(
                     query,
                     values
                 )
-
                 connection.commit()
-
                 cursor.close()
                 connection.close()
-
                 return redirect(
                     url_for("dashboard")
                 )
 
             except mysql.connector.Error as e:
-
                 connection.rollback()
-
                 cursor.close()
                 connection.close()
-
                 error = f"Database error: {e}"
 
 
@@ -324,11 +305,9 @@ def sales():
         # -----------------------------
 
         if not medicine_id:
-
             error = "Please select a medicine."
 
         elif not sold_quantity:
-
             error = "Please enter quantity."
 
 
@@ -337,19 +316,15 @@ def sales():
         # -----------------------------
 
         if not error:
-
             try:
-
                 sold_quantity = int(sold_quantity)
 
                 if sold_quantity <= 0:
-
                     error = (
                         "Quantity must be greater than 0."
                     )
 
             except ValueError:
-
                 error = (
                     "Quantity must be a whole number."
                 )
@@ -360,7 +335,6 @@ def sales():
         # -----------------------------
 
         if not error:
-
             cursor.execute("""
                 SELECT
                     id,
@@ -374,7 +348,6 @@ def sales():
             medicine = cursor.fetchone()
 
             if not medicine:
-
                 error = "Medicine not found."
 
 
@@ -383,11 +356,9 @@ def sales():
         # -----------------------------
 
         if not error:
-
             current_stock = medicine[2]
 
             if sold_quantity > current_stock:
-
                 error = (
                     f"Only {current_stock} units "
                     "are available in stock."
@@ -399,11 +370,8 @@ def sales():
         # -----------------------------
 
         if not error:
-
             try:
-
                 medicine_name = medicine[1]
-
                 medicine_price = float(
                     medicine[3]
                 )
@@ -463,28 +431,19 @@ def sales():
                     medicine_price,
                     total
                 ))
-
-
                 # Save both operations
-
                 connection.commit()
-
-
                 message = (
                     f"Sale completed successfully! "
                     f"Total: ₹{total:.2f}. "
                     f"Remaining stock: {new_stock}"
                 )
 
-
             except mysql.connector.Error as e:
-
                 connection.rollback()
-
                 error = (
                     f"Database error: {e}"
                 )
-
 
     # -----------------------------
     # Get all medicines
@@ -499,24 +458,14 @@ def sales():
         FROM medicines
         ORDER BY name ASC
     """)
-
     medicines = cursor.fetchall()
-
-
     cursor.close()
     connection.close()
-
-
     return render_template(
-
         "sales.html",
-
         medicines=medicines,
-
         message=message,
-
         error=error
-
     )
 
 # ==========================================
@@ -525,7 +474,6 @@ def sales():
 
 @app.route("/dashboard")
 def dashboard():
-
     connection = get_db_connection()
     cursor = connection.cursor()
 
@@ -545,7 +493,6 @@ def dashboard():
     """)
 
     medicines = cursor.fetchall()
-
     cursor.close()
     connection.close()
 
@@ -555,17 +502,12 @@ def dashboard():
     # ======================================
 
     medicine_list = []
-
     today = date.today()
 
     for medicine in medicines:
-
         expiry_date = medicine[7]
-
         quantity = medicine[4]
-
         min_stock = medicine[8]
-
 
         # -----------------------------
         # Calculate days remaining
@@ -581,15 +523,12 @@ def dashboard():
         # -----------------------------
 
         if days_left < 0:
-
             expiry_status = "Expired"
 
         elif days_left <= 30:
-
             expiry_status = "Expiring Soon"
 
         else:
-
             expiry_status = "Safe"
 
 
@@ -598,11 +537,9 @@ def dashboard():
         # -----------------------------
 
         if quantity <= min_stock:
-
             stock_status = "Low Stock"
 
         else:
-
             stock_status = "Available"
 
 
@@ -611,31 +548,18 @@ def dashboard():
         # -----------------------------
 
         medicine_list.append({
-
             "id": medicine[0],
-
             "name": medicine[1],
-
             "batch_no": medicine[2],
-
             "category": medicine[3],
-
             "quantity": medicine[4],
-
             "price": medicine[5],
-
             "manufacturing_date": medicine[6],
-
             "expiry_date": medicine[7],
-
             "min_stock": medicine[8],
-
             "days_left": days_left,
-
             "expiry_status": expiry_status,
-
             "stock_status": stock_status
-
         })
 
 
@@ -644,9 +568,7 @@ def dashboard():
     # ======================================
 
     summary = {
-
         "total": len(medicine_list),
-
         "expired": sum(
             1
             for m in medicine_list
@@ -664,7 +586,6 @@ def dashboard():
             for m in medicine_list
             if m["stock_status"] == "Low Stock"
         )
-
     }
 
 
@@ -673,13 +594,9 @@ def dashboard():
     # ======================================
 
     return render_template(
-
         "dashboard.html",
-
         medicines=medicine_list,
-
         summary=summary
-
     )
 
 
@@ -690,7 +607,6 @@ def dashboard():
 @app.route("/expiring-soon")
 def expiring_soon():
     return redirect(url_for("expiry_alerts"))
-
 
 # ==========================================
 # EXPIRED MEDICINES
@@ -706,10 +622,8 @@ def expired():
 
 @app.route("/low-stock")
 def low_stock():
-
     connection = get_db_connection()
     cursor = connection.cursor()
-
     cursor.execute("""
         SELECT
             id,
@@ -747,25 +661,19 @@ def delete_medicine(medicine_id):
     cursor = connection.cursor()
 
     try:
-
         cursor.execute(
             "DELETE FROM medicines WHERE id = %s",
             (medicine_id,)
         )
 
         connection.commit()
-
     except mysql.connector.Error as e:
-
         connection.rollback()
-
         print("Database error:", e)
 
     finally:
-
         cursor.close()
         connection.close()
-
     return redirect(url_for("dashboard"))
 
 # ==========================================
@@ -774,7 +682,6 @@ def delete_medicine(medicine_id):
 
 @app.route("/expiry-alerts")
 def expiry_alerts():
-
     connection = get_db_connection()
     cursor = connection.cursor()
 
@@ -800,7 +707,6 @@ def expiry_alerts():
     """)
 
     expiring_medicines = cursor.fetchall()
-
 
     # Expired medicines
     cursor.execute("""
